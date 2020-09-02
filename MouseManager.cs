@@ -10,8 +10,8 @@ namespace MOS
         private Pen blackPen = new Pen(Color.Black);
         private Pen whitePen = new Pen(Color.White);
         private Debugger debugger = new Debugger("Drawable", "MouseManager");
-        private uint screenSizeX = 0;
-        private uint screenSizeY = 0;
+        private uint screenSizeX = GUI.ScreenWidth;
+        private uint screenSizeY = GUI.ScreenHeight;
         private bool firstLoop = true;
 
         int[] cursor = new int[]
@@ -37,18 +37,16 @@ namespace MOS
                 0,0,0,0,0,0,0,1,1,0,0,0
             };
 
-        Color[] savedSubLayer = new Color[12 * 19];
+        uint[] savedSubLayer = new uint[12 * 19];
         int[] savedPosition = new int[2];
 
-        void IDrawable.init(Canvas canvas)
+        void IDrawable.init(DoubleBufferedVMWareSVGAII canvas)
         {
-            screenSizeX = (uint)canvas.Mode.Columns;
-            screenSizeY = (uint)canvas.Mode.Rows;
             Cosmos.System.MouseManager.ScreenWidth = screenSizeX;
             Cosmos.System.MouseManager.ScreenHeight = screenSizeY;
         }
 
-        void IDrawable.draw(Canvas canvas)
+        void IDrawable.draw(DoubleBufferedVMWareSVGAII canvas)
         {
             int x = (int)(Cosmos.System.MouseManager.X);
             int y = (int)(Cosmos.System.MouseManager.Y);
@@ -69,7 +67,7 @@ namespace MOS
             this.DrawCursorAt(x, y, canvas);
         }
 
-        private void DrawCursorAt(int x, int y, Canvas canvas)
+        private void DrawCursorAt(int x, int y, DoubleBufferedVMWareSVGAII canvas)
         {
             for (ushort h = 0; h < 19; h++)
             {
@@ -77,17 +75,17 @@ namespace MOS
                 {
                     if (cursor[h * 12 + w] == 1)
                     {
-                        canvas.DrawPoint(this.blackPen, w + x, h + y);
+                        canvas.DoubleBuffer_SetPixel((uint)(w + x), (uint)(h + y), (uint)Color.Black.ToArgb());
                     }
                     if (cursor[h * 12 + w] == 2)
                     {
-                        canvas.DrawPoint(this.whitePen, w + x, h + y);
+                        canvas.DoubleBuffer_SetPixel((uint)(w + x), (uint)(h + y), (uint)Color.White.ToArgb());
                     }
                 }
             }
         }
 
-        private void CaptureCurrentSublayer(int x, int y, Canvas canvas)
+        private void CaptureCurrentSublayer(int x, int y, DoubleBufferedVMWareSVGAII canvas)
         {
             savedPosition[0] = x;
             savedPosition[1] = y;
@@ -95,12 +93,12 @@ namespace MOS
             {
                 for (ushort w = 0; w < 12; w++)
                 {
-                    savedSubLayer[h * 12 + w] = canvas.GetPointColor(w + x, h + y);
+                    savedSubLayer[h * 12 + w] = canvas.DoubleBuffer_GetPixel((uint)(w + x), (uint)(h + y));
                 }
             }
         }
 
-        private void RestoreSavedSublayer(Canvas canvas)
+        private void RestoreSavedSublayer(DoubleBufferedVMWareSVGAII canvas)
         {
             //canvas.DrawArray(savedSubLayer, x, y, 12, 19);
             for (ushort h = 0; h < 19; h++)
@@ -108,8 +106,8 @@ namespace MOS
                 for (ushort w = 0; w < 12; w++)
                 {
                     //savedSubLayer[h * 12 + w] = canvas.GetPointColor(w + x, h + y);
-                    Pen pen = new Pen(savedSubLayer[h * 12 + w]);
-                    canvas.DrawPoint(pen, savedPosition[0] + w, savedPosition[1] + h);
+                   // Pen pen = new Pen(savedSubLayer[h * 12 + w]);
+                    canvas.DoubleBuffer_SetPixel((uint)(savedPosition[0] + w), (uint)(savedPosition[1] + h), savedSubLayer[h * 12 + w]);
                 }
             }
         }

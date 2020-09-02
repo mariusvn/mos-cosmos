@@ -7,19 +7,17 @@ namespace MOS
     class TaskBar : IDrawable
     {
 
-        private Pen pen = new Pen(Color.FromArgb(0, 24, 35, 35));
+        private uint color = (uint)Color.FromArgb(0, 24, 35, 35).ToArgb();
         private const ushort taskBarHeight = 40;
-        private int screenWidth, screenHeight;
+        private int screenWidth = GUI.ScreenWidth, screenHeight = GUI.ScreenHeight;
 
-        void IDrawable.init(Canvas canvas)
+        void IDrawable.init(DoubleBufferedVMWareSVGAII canvas)
         {
-            screenWidth = canvas.Mode.Columns;
-            screenHeight = canvas.Mode.Rows;
         }
 
-        void IDrawable.draw(Canvas canvas)
+        void IDrawable.draw(DoubleBufferedVMWareSVGAII canvas)
         {
-            canvas.DrawFilledRectangle(this.pen, new Point(0, screenHeight - taskBarHeight), screenWidth, taskBarHeight);
+            canvas.DoubleBuffer_DrawFillRectangle(0, (uint)(screenHeight - taskBarHeight), (uint)(screenWidth), taskBarHeight, color);
         }
     }
 }

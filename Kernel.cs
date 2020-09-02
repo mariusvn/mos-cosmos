@@ -10,7 +10,6 @@ namespace MOS
 {
     public class Kernel : Sys.Kernel
     {
-
         private GUI gui;
         private PIT pit = new PIT();
         protected override void BeforeRun()
