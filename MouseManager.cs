@@ -1,15 +1,9 @@
-﻿using Cosmos.System.Graphics;
-using System.Drawing;
-using Cosmos.Debug.Kernel;
-using System.Numerics;
+﻿using System.Drawing;
 
 namespace MOS
 {
     class MouseManager : IDrawable
     {
-        private Pen blackPen = new Pen(Color.Black);
-        private Pen whitePen = new Pen(Color.White);
-        private Debugger debugger = new Debugger("Drawable", "MouseManager");
         private uint screenSizeX = GUI.ScreenWidth;
         private uint screenSizeY = GUI.ScreenHeight;
         private bool firstLoop = true;
@@ -100,13 +94,10 @@ namespace MOS
 
         private void RestoreSavedSublayer(DoubleBufferedVMWareSVGAII canvas)
         {
-            //canvas.DrawArray(savedSubLayer, x, y, 12, 19);
             for (ushort h = 0; h < 19; h++)
             {
                 for (ushort w = 0; w < 12; w++)
                 {
-                    //savedSubLayer[h * 12 + w] = canvas.GetPointColor(w + x, h + y);
-                   // Pen pen = new Pen(savedSubLayer[h * 12 + w]);
                     canvas.DoubleBuffer_SetPixel((uint)(savedPosition[0] + w), (uint)(savedPosition[1] + h), savedSubLayer[h * 12 + w]);
                 }
             }

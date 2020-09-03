@@ -1,5 +1,4 @@
-﻿using Cosmos.HAL;
-using System;
+﻿using System;
 using Sys = Cosmos.System;
 
 namespace MOS
