@@ -6,10 +6,12 @@ namespace MOS
     public class Kernel : Sys.Kernel
     {
         private GUI gui;
+        private FileSystem fileSystem;
         protected override void BeforeRun()
         {
             Console.WriteLine("MOS Successfully booted !");
             Console.WriteLine("Copyright Marius Van Nieuwenhuyse");
+            this.fileSystem = new FileSystem();
             this.gui = new GUI();
         }
 
