@@ -2,6 +2,8 @@
 using Cosmos.HAL;
 using System;
 
+// This code has been written by @nifanfa
+
 namespace MOS
 {
     /// <summary>

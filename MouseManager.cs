@@ -53,7 +53,7 @@ namespace MOS
             if (x < 0) x = 0;
             if (y < 0) y = 0;
             if (x >= screenSizeX) x = (int) screenSizeX - 1;
-            if (y >= screenSizeY) y = (int)screenSizeY - 1;
+            if (y >= screenSizeY) y = (int) screenSizeY - 1;
 
             if (!firstLoop)
             {
