@@ -1,9 +1,5 @@
-﻿using Cosmos.Debug.Kernel;
-using Cosmos.HAL;
+﻿using Cosmos.HAL;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using Sys = Cosmos.System;
 
 namespace MOS
@@ -11,7 +7,6 @@ namespace MOS
     public class Kernel : Sys.Kernel
     {
         private GUI gui;
-        private PIT pit = new PIT();
         protected override void BeforeRun()
         {
             Console.WriteLine("MOS Successfully booted !");
@@ -24,16 +19,19 @@ namespace MOS
             try
             {
                 this.gui.draw();
-            } catch (Exception e)
+                this.WaitBetweenFrames();
+            }
+            catch (Exception e)
             {
                 mDebugger.Send("Exception occurred: " + e.Message);
                 mDebugger.Send(e.Message);
             }
         }
 
-        private void DelayCode(uint milliseconds)
+        // TODO Replace by a PIT.Wait when the bug is resolved
+        private void WaitBetweenFrames()
         {
-            this.pit.Wait(milliseconds);
+            Cosmos.Core.Global.CPU.Halt();
         }
     }
 }
