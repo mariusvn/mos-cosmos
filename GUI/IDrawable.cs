@@ -2,7 +2,7 @@
 
 namespace MOS
 {
-    interface IDrawable
+    public interface IDrawable
     {
         void init(DoubleBufferedVMWareSVGAII canvas);
         void draw(DoubleBufferedVMWareSVGAII canvas);

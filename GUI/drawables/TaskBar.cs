@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace MOS
+namespace MOS.GUI.drawables
 {
     class TaskBar : IDrawable
     {

@@ -1,0 +1,71 @@
+﻿#########################################################
+#                                                       #
+#              PixFont Format Specification             #
+#                                                       #
+#########################################################
+
+Format Extension : .pf
+Magic Number : 0xF8CA
+Author : Marius Van Nieuwenhuyse
+
+--------------------- Introduction ----------------------
+
+The pixfont format is used to store a font by specifying
+the font by pixels by a binary way.
+
+I was motivated to create this format to create a custom
+way to store font. Purely educative.
+
+--------------------- File content ----------------------
+
+1. The first 16 bits of the files are the magic number.
+
+2. Next, comes the font height of a font in 8 bits.
+   (Recommended height: 12)
+
+3. Next, comes the character column alignement. We need
+   to store the data in 8 bits alignment. By example, if
+   the chararcters are 7 pixel height, we need to add a
+   bit at the end of every column to align it to 8. If
+   it's a 11 pixel height, it will be 16. all that in 8
+   bits.
+
+4. Next, comes the amount of characters (x) encoded in 32
+   bits.
+
+5. Start of the characters section (x times)
+
+5.1. Character ASCII id in 16 bits
+
+5.2. Character width in 8 bits
+
+5.3. Start of the pixels section stored in binary.
+     All the data is stored vertically
+
+     Exemple for a 5x7 pixel A:
+
+     #######
+     # XXX #
+     #X   X#
+     #XXXXX#
+     #X   X#
+     #X   X#
+     #X   X#
+     #X   X#
+     #######
+
+     0b01111110 => 0x7E
+     0b10100000 => 0xA0
+     0b10100000 => 0xA0
+     0b10100000 => 0xA0
+     0b01111110 => 0x7E
+
+     Notice the last null bit to align to 8 bit.
+
+     The 'A' ASCII code is 65.
+
+     The whole character secton for it will be:
+
+     41 00 05 7E A0 A0 A0 7E
+
+6. A NULL 8bits to terminate the file

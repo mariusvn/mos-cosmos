@@ -5,21 +5,26 @@ namespace MOS
 {
     public class Kernel : Sys.Kernel
     {
-        private GUI gui;
-        private FileSystem fileSystem;
+        public static GUI.GUI gui;
+        public static FileSystem fileSystem;
         protected override void BeforeRun()
         {
             Console.WriteLine("MOS Successfully booted !");
             Console.WriteLine("Copyright Marius Van Nieuwenhuyse");
-            this.fileSystem = new FileSystem();
-            this.gui = new GUI();
+            Kernel.fileSystem = new FileSystem();
+            Kernel.gui = new GUI.GUI();
+            //GUI.drawables.ContextMenu menu = new GUI.drawables.ContextMenu(100, 150);
+            //menu.AddMenuItem("This is a text", () =>
+            //{
+            //    return;s
+            //});
         }
 
         protected override void Run()
         {
             try
             {
-                this.gui.draw();
+                Kernel.gui.draw();
                 this.WaitBetweenFrames();
             }
             catch (Exception e)
