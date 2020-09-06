@@ -26,7 +26,7 @@ way to store font. Purely educative.
 3. Next, comes the character column alignement. We need
    to store the data in 8 bits alignment. By example, if
    the chararcters are 7 pixel height, we need to add a
-   bit at the end of every column to align it to 8. If
+   bit at the start of every column to align it to 8. If
    it's a 11 pixel height, it will be 16. all that in 8
    bits.
 
@@ -54,11 +54,11 @@ way to store font. Purely educative.
      #X   X#
      #######
 
-     0b01111110 => 0x7E
-     0b10100000 => 0xA0
-     0b10100000 => 0xA0
-     0b10100000 => 0xA0
-     0b01111110 => 0x7E
+     0b00111111 => 0x3F
+     0b01010000 => 0x50
+     0b01010000 => 0x50
+     0b01010000 => 0x50
+     0b00111111 => 0x3F
 
      Notice the last null bit to align to 8 bit.
 
@@ -66,6 +66,6 @@ way to store font. Purely educative.
 
      The whole character secton for it will be:
 
-     41 00 05 7E A0 A0 A0 7E
+     41 00 05 3F 50 50 50 3F
 
 6. A NULL 8bits to terminate the file

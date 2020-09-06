@@ -12,6 +12,13 @@ namespace MOS
             Console.WriteLine("MOS Successfully booted !");
             Console.WriteLine("Copyright Marius Van Nieuwenhuyse");
             Kernel.fileSystem = new FileSystem();
+            try
+            {
+                new GUI.PixelFont(@"0:\font.pf");
+            } catch (Exception e)
+            {
+                mDebugger.Send("Error: " + e.Message);
+            }
             Kernel.gui = new GUI.GUI();
             //GUI.drawables.ContextMenu menu = new GUI.drawables.ContextMenu(100, 150);
             //menu.AddMenuItem("This is a text", () =>

@@ -23,7 +23,7 @@ namespace MOS
         {
             try
             {
-                DirectoryEntry entry = this.vfs.GetFile(@"0:\Kudzu.txt");
+                DirectoryEntry entry = this.vfs.GetFile(path);
                 Stream stream = entry.GetFileStream();
                 if (stream.CanRead)
                 {
